@@ -1,4 +1,4 @@
-![ayano](hady-zen/hady.png) 
+![kiyopon](hady-zen/kiyopon.png) 
 
 <h1 align="center">KIYOPON V1.0</h1>
 
