@@ -1,0 +1,20 @@
+{
+  "nama": "Kiyopon",
+  "pemilik": "Hady Zen'in",
+  "port": 8080,
+  "aikey": "AIzaSyAXBvwNkZBckC8b3vTZVVuwRwlsPttTgkA",
+  "chatdm": false,
+  "zonawaktu": "Asia/Jakarta"
+
+  "setting": {
+    "forceLogin": true,
+    "listenEvents": true,
+    "updatePresence": true,
+    "listenTyping": true,
+    "logLevel": "error",
+    "selfListen": false,
+    "selfListenEvent": true,
+    "autoMarkDelivery": false,
+    "autoReconnect": false
+ }
+}
