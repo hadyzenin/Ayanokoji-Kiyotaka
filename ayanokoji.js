@@ -71,6 +71,7 @@ app.lisapi.sendMessage(data.kiyopon, event.messageID, event.threadID);
 });
 
 app.listen(port, () => {});
+app.use(express.static(path.join(__dirname, 'hady-zen')));
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'hady-zen', 'ayanokoji', 'ayanokoji.html'));
 });
