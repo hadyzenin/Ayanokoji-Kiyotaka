@@ -4,7 +4,7 @@
   "port": 8080,
   "aikey": "AIzaSyAXBvwNkZBckC8b3vTZVVuwRwlsPttTgkA",
   "chatdm": false,
-  "zonawaktu": "Asia/Jakarta"
+  "zonawaktu": "Asia/Jakarta",
 
   "setting": {
     "forceLogin": true,
