@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ayanokoji: Bot AI by hady</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #0f111a;
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #1c1e29;
+      padding: 10px 15px;
+    }
+
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .topbar-left img {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+    }
+
+    .topbar-left .title {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .version-badge {
+      background-color: #122e4c;
+      padding: 2px 6px;
+      border-radius: 8px;
+      font-size: 12px;
+      margin-left: 5px;
+      color: #4ea4ff;
+    }
+
+    .topbar-right i {
+      font-size: 20px;
+      margin-left: 15px;
+      color: #4ea4ff;
+      cursor: default;
+    }
+
+    .main-content > div {
+      display: none;
+      padding: 20px;
+      min-height: calc(100vh - 120px);
+    }
+
+    .main-content > .active-page {
+      display: block;
+    }
+
+    .bottombar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: #1c1e29;
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
+      border-top: 1px solid #2a2c3b;
+    }
+
+    .bottombar a {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-decoration: none;
+      color: #ccc;
+      font-size: 12px;
+      transition: color 0.3s;
+    }
+
+    .bottombar a.active {
+      color: #4ea4ff;
+    }
+
+    .bottombar a:hover {
+      color: #4ea4ff;
+    }
+
+    .bottombar i {
+      font-size: 18px;
+      margin-bottom: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navbar -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <img src="../kiyotaka/hady.png" alt="Logo" />
+      <div class="title">Ayanokoji Kiyotaka<span class="version-badge">v1.0</span></div>
+    </div>
+    <div class="topbar-right">
+      <i class="fas fa-bars"></i>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    
+<!-- BAGIAN HOME -->
+<div id="page-home" class="active-page">
+<h2 style="color: #4ea4ff;"><i class="fas fa-home" style="margin-right: 8px;"></i>Home</h2>
+
+  <!-- Info Developer -->
+  <div style="background:#1e2233; padding:15px; border-radius:10px; margin-bottom:20px;">
+    <h3 style="margin-top:0; color:#4ea4ff;">👨‍💻 Developer</h3>
+    <p>Nama: <strong>Hady Zen'in</strong></p>
+    <p>GitHub: <a href="https://github.com/hadyzenin" target="_blank" style="color:#4ea4ff;">@hadyzenin</a></p>
+    <p>Email: <a href="mailto:emailkamu@example.com" style="color:#4ea4ff;">emailkamu@example.com</a></p>
+  </div>
+
+  <!-- Deskripsi Aplikasi -->
+  <div style="background:#1e2233; padding:15px; border-radius:10px; margin-bottom:20px;">
+    <h3 style="margin-top:0; color:#4ea4ff;">📝 Deskripsi</h3>
+    <p>Koncet nanti ae lah</p>
+  </div>
+
+  <!-- Video Lokal -->
+  <div style="background:#1e2233; padding:15px; border-radius:10px;">
+    <h3 style="margin-top:0; color:#4ea4ff;">🎬 JJ Anime</h3>
+    <video controls loop style="width: 100%; border-radius:10px;" poster="../kiyotaka/hady.png">
+      <source src="../kiyotaka/hady.mp4" type="video/mp4"></video>
+  </div>
+</div>
+
+<!-- BAGIAN MANGA -->
+    <div id="page-manga">
+<h2 style="color: #4ea4ff;"><i class="fas fa-book-open" style="margin-right: 8px;"></i>Manga</h2>
+    </div>
+    
+<!-- BAGIAN WAIFU -->
+    <div id="page-waifu">
+<h2 style="color: #4ea4ff;"><i class="fas fa-heart" style="margin-right: 8px;"></i>Waifu</h2>
+    </div>
+  
+<!-- BAGIAN BOT -->
+    <div id="page-bot">
+      <h2 style="color: #4ea4ff;"><i class="fas fa-robot" style="margin-right: 8px;"></i>Bot</h2>
+    </div>
+  </div>
+
+  <!-- Bottom Navbar -->
+  <div class="bottombar">
+    <a href="#" class="active" data-page="home">
+      <i class="fas fa-home"></i>
+      <span>Home</span>
+    </a>
+    <a href="#" data-page="manga">
+      <i class="fas fa-book-open"></i>
+      <span>Manga</span>
+    </a>
+    <a href="#" data-page="waifu">
+      <i class="fas fa-heart"></i>
+      <span>Waifu</span>
+    </a>
+    <a href="#" data-page="bot">
+      <i class="fas fa-robot"></i>
+      <span>Bot</span>
+    </a>
+  </div>
+
+  <!-- Navigation JS -->
+  <script>
+    const navLinks = document.querySelectorAll('.bottombar a');
+    const pages = document.querySelectorAll('.main-content > div');
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        navLinks.forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+        pages.forEach(page => page.classList.remove('active-page'));
+
+        const targetId = 'page-' + link.getAttribute('data-page');
+        document.getElementById(targetId).classList.add('active-page');
+      });
+    });
+  </script>
+
+</body>
+  </html>
