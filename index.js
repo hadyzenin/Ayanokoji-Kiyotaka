@@ -4,7 +4,7 @@
 const { spawn } = require('child_process');
 
 function hady() {
-  const child = spawn("node Ara.js", {
+  const child = spawn("node Ayanokoji.js", {
     cwd: __dirname,
     stdio: "inherit",
     shell: true
