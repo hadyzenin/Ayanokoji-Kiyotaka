@@ -2,7 +2,7 @@ module.exports = {
   hady: { 
     nama: "status", 
     penulis: "Hady Zen", 
-    kuldown: 10,
+    kuldown: 26,
     peran: 0,
     tutor: ""
   }, 
