@@ -1,26 +1,47 @@
-const font = require('fontstyles');
+const font = require("fontstyles");
+
 module.exports = {
   hady: {
-   nama: "rand",
+    nama: "rand",
     penulis: "Hady Zen",
-    kuldown: 10,
+    kuldown: 8,
     peran: 0,
     tutor: "<pilihan>, <pilihan>"
   },
 
-bahasa: {
-  id: { hadi: "Berikan setidaknya dua rentang kata." }, 
-  en: { hadi: "Please provide at least two words." }
-}, 
-  
-  Ayanokoji: async function ({ api, event, args, bhs }) { 
-   const hadi = args.join(" ");
-   const itsuki = hadi.split(",");
- if (!hadi.includes(',')) {
-   return api.sendMessage(bhs('hadi'), event.thteadID, event.messageID)
- }
-const rand = Math.floor(Math.random() * itsuki.length);
-const pilihan = font.bold(itsuki[rand]);
-api.sendMessage(`Saya lebih memilih ${pilihan}`, event.threadID, event.messageID);
- }
+  Ayanokoji: async function ({ api, event, args }) {
+
+    const hadi = args.join(" ");
+
+    if (!hadi.includes(",")) {
+
+      return api.sendMessage(
+        "Berikan setidaknya dua pilihan.",
+        event.threadID,
+        event.messageID
+      );
+
+    }
+    
+
+    const itsuki = hadi
+      .split(",")
+      .map(x => x.trim())
+      .filter(x => x);
+
+    const rand = Math.floor(
+      Math.random() * itsuki.length
+    );
+
+    const pilihan = font.bold(
+      itsuki[rand]
+    );
+
+    api.sendMessage(
+      `Saya lebih memilih ${pilihan}`,
+      event.threadID,
+      event.messageID
+    );
+
+  }
 };
