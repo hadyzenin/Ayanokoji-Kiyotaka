@@ -6,7 +6,7 @@ module.exports = {
     nama: "menu",
     penulis: "Hady Zen", // modifed by Range
     peran: 0,
-    kuldown: 10,
+    kuldown: 40,
     tutor: "<cmd/kosong>"
   },
     
@@ -61,7 +61,7 @@ module.exports = {
 
     if (args[0] && commandInfo[args[0]]) {
       const info = commandInfo[args[0]];
-      api.sendMessage(`🜲 𝗜𝗻𝗳𝗼 𝗽𝗲𝗿𝗶𝗻𝘁𝗮𝗵
+      api.sendMessage(`𝗜𝗻𝗳𝗼 𝗽𝗲𝗿𝗶𝗻𝘁𝗮𝗵
       
 - Nama: ${info.nama}
 - Penulis: ${info.penulis}
