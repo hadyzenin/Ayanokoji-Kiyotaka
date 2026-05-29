@@ -1,37 +1,53 @@
-const wiki = require('wikijs');
+const wiki = require("wikijs");
+
 module.exports = {
-  hady: { 
-    nama: "wiki", 
-    penulis: "Hady Zen", 
+  hady: {
+    nama: "wiki",
+    penulis: "Hady Zen",
     kuldown: 10,
     peran: 0,
     tutor: "<cari>"
-  }, 
+  },
 
-  bahasa: {
-    id: { hadi: "Tidak ada hasil ditemukan.",
-          kiyopon: "Masukkan yang ingin kamu cari." }, 
-    en: { hadi: "No results found.",
-          kiyopon: "Enter the one you want to search" }
-  }, 
-  
-  Ayanokoji: async function ({ api, event, args, bhs }) {
-    const input = args.join(' ');
-    if (!input) return api.sendMessage(bhs('kiyopon'), event.threadID, event.messageID);
-    
-    wiki.default({ apiUrl: `https://${global.Ayanokoji.bahasa}.wikipedia.org/w/api.php` })
-        .find(input)
-        .then(async (page) => {
-            try {
-                const summary = await page.summary();
+  Ayanokoji: async function ({ api, event, args }) {
 
-                await api.sendMessage(summary, event.threadID, event.messageID);
-            } catch (error) {
-                return api.sendMessage(bhs('hadi'), event.threadID, event.messageID);
-            }
-        })
-        .catch((err) => {
-            api.sendMessage('Error: ' + err, event.threadID, event.messageID);
-        });
+    const input = args.join(" ");
+
+    if (!input) {
+
+      return api.sendMessage(
+        "Masukkan yang ingin kamu cari.",
+        event.threadID,
+        event.messageID
+      );
+
+    }
+
+    try {
+
+      const wikipedia = wiki.default({
+        apiUrl: `https://${global.Ayanokoji.bahasa}.wikipedia.org/w/api.php`
+      });
+
+      const page = await wikipedia.find(input);
+
+      const summary = await page.summary();
+
+      api.sendMessage(
+        summary,
+        event.threadID,
+        event.messageID
+      );
+
+    } catch (error) {
+
+      api.sendMessage(
+        "Tidak ada hasil ditemukan.",
+        event.threadID,
+        event.messageID
+      );
+
+    }
+
   }
 };
