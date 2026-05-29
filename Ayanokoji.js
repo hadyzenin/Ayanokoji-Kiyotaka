@@ -13,18 +13,16 @@
  const akun = fs.readFileSync('akun.txt', 'utf8');
  const { version } = require('./package');
  const gradient = require('gradient-string');
- const { awalan, nama, admin, proxy, port, bahasa: nakano, maintain, chatdm, aikey, setting, zonawaktu } = require('./kiyotaka');
+ const { awalan, nama, admin, proxy, port, maintain, chatdm, aikey, setting, zonawaktu } = require('./kiyotaka');
  const { kuldown } = require('./hady-zen/kuldown');
  const moment = require('moment-timezone');
  const now = moment.tz(zonawaktu);
 
-process.on('unhandledRejection', error => console.log(logo.error + error));
-process.on('uncaughtException', error => console.log(logo.error + error));
 const zen = { host: proxy, port: port };
 const kiyopon = gradient("#ADD8E6", "#4682B4", "#00008B")(logo.ayanokoji);
 const tanggal = now.format('YYYY-MM-DD');
 const waktu = now.format('HH:mm:ss');
-global.Ayanokoji = { awalan: awalan, nama: nama, admin: admin, logo: logo, aikey: aikey, bahasa: nakano, maintain: maintain, waktu: waktu, tanggal: tanggal };
+global.Ayanokoji = { awalan: awalan, nama: nama, admin: admin, logo: logo, aikey: aikey, maintain: maintain, waktu: waktu, tanggal: tanggal };
 
 function clear() {
   fs.readdir('assets', (err, files) => {
@@ -67,7 +65,7 @@ if (fs.existsSync(path.join('hady-zen', 'kiyopon.db'))) {
 function addData(id) {
     if (data[id]) {
     } else {
-        data[id] = { "nama": "Kiyopon User", "yen": 0, "exp": 0, "level": 1, "daily": null };
+        data[id] = { "nama": "Kiyopon", "yen": 0, "exp": 0, "level": 1, "daily": null };
         console.log(ayanokoji('database') + `${id} pengguna baru.`);
     }
     simpan();
@@ -101,6 +99,20 @@ function simpan() {
  });
 };
 
+async function DyAI(pesan) {
+const res = await axios.post("https://api.groq.com/openai/v1/chat/completions", {
+  model: "llama-3.1-8b-instant",
+  messages: [{ role: "user", content: pesan }]
+}, {
+  headers: {
+    "Authorization": `Bearer ${aikey}`,
+    "Content-Type": "application/json"
+  }
+});
+  
+  return res.data.choices[0].message.content;
+};
+
 async function loadC() {
   fs.readFileSync('kiyotaka.json')
 };
@@ -111,7 +123,6 @@ setInterval(function() { loadC(); }, 1000);
 
 console.log(logo.info + `Versi ${version}`);
 console.log(logo.info + `Awalan ${awalan}`);
-console.log(logo.info + `Bahasa ${nakano}`);
 console.log(logo.info + `Admin ${admin}`);
 fs.readdir('./perintah', (err, files) => { 
  const shadow = files.map(file => path.parse(file).name);
@@ -121,6 +132,7 @@ console.log(ayanokoji('perintah') + `${shadow}.`);
 if (!akun || akun.length < 0 || !JSON.parse(akun)) {
  console.log(logo.error + 'Kamu belum memasukkan cookie.');
 }
+
 
 login({appState: JSON.parse(akun, zen)}, setting, (err, api) => {
 if (err) { 
@@ -135,7 +147,17 @@ if (err) {
 const body = event.body;
 if (!body || global.Ayanokoji.maintain === true && !admin.includes(event.senderID) || chatdm === false && event.isGroup == false && !admin.includes(event.senderID)) return; 
   addData(event.senderID);
-if (body.toLowerCase() == "prefix") return api.sendMessage(`✨️ Awalan ${nama} adalah: ${awalan}`, event.threadID, event.messageID);
+if (body.toLowerCase() == "prefix") return api.sendMessage(`Awalan ${nama} adalah: ${awalan}`, event.threadID, event.messageID);
+if (body.startsWith("Kiyopon")) {
+   const ijo = body.slice(5) || " hai";
+   const harmonie = " Prompt: Kamu role play sebagai Ayanokoji Kiyotaka. User: " + ijo;  
+   DyAI(harmonie).then(jawaban => {
+    return api.sendMessage(jawaban, event.threadID, event.messageID);
+  }).catch(e => {
+    console.log(e);
+    return api.sendMessage("Error: " + e, event.threadID, event.messageID);
+  });
+ };
 if (!body.startsWith(awalan)) return console.log(logo.chat + `${event.senderID}: ${body}`);
    const cmd = body.slice(awalan.length).trim().split(/ +/g).shift().toLowerCase();
 	   
@@ -150,7 +172,7 @@ if (!body.startsWith(awalan)) return console.log(logo.chat + `${event.senderID}:
        for (const file of files) {
    if (file.endsWith('.js')) {
     const anime = path.join(path.join(__dirname, '/perintah'), file);
-    const { hady, Ayanokoji, bahasa } = require(anime);
+    const { hady, Ayanokoji } = require(anime);
 
    if (hady && hady.nama === cmd && typeof Ayanokoji === 'function') {
   console.log(logo.info + `Menjalankan perintah ${hady.nama}`);
@@ -159,21 +181,21 @@ if (!body.startsWith(awalan)) return console.log(logo.chat + `${event.senderID}:
    if (kuldown(event.senderID, hady.nama, hady.kuldown) == 'hadi') { 
 	   
 if (hady.peran == 0 || !hady.peran) {
-    await Ayanokoji({ api, event, args, bhs, getStream, loadC, setUser, getData });
+    await Ayanokoji({ api, event, args, getStream, loadC, setUser, getData });
     return;
 }
 if ((hady.peran == 2 || hady.peran == 1) && admin.includes(event.senderID) || hady.peran == 0) {
-    await Ayanokoji({ api, event, args, bhs, getStream, loadC, setUser, getData });
+    await Ayanokoji({ api, event, args, getStream, loadC, setUser, getData });
     return;
 } else if (hady.peran == 1 && fitri.join(', ').includes(event.senderID) || hady.peran == 0) {
-    await Ayanokoji({ api, event, args, bhs, getStream, loadC, setUser, getData });
+    await Ayanokoji({ api, event, args, getStream, loadC, setUser, getData });
     return;
 } else { 
-    api.setMessageReaction("❕", event.messageID);
+    api.setMessageReaction("🦔", event.messageID);
 }
 
   } else {
-   api.setMessageReaction('⌛', event.messageID);
+   api.sendMessage("Sabar dong :v", event.threadID, event.messageID);
    }
   } 
  }
@@ -186,40 +208,25 @@ if ((hady.peran == 2 || hady.peran == 1) && admin.includes(event.senderID) || ha
  });
 });
 
+setInterval(async () => {
+    try {
+       await api.getCurrentUserID()
+        console.log(logo.info + "Kiyopon masih on.");
+    } catch (err) {
+        console.log(logo.proses + "Menyambung ulang...");
+        login({ appState: JSON.parse(akun, zen) }, (err, api) => {
+      if (err) return process.exit();
+        })
+    }
+}, 1000 * 60 * 60)
+
 app.listen(port, () => { });
 app.get('/', (req, res) => { 
  res.sendFile(path.join(__dirname, 'hady-zen', 'kiyotaka', 'ayanokoji.html'));
 });
-app.get('/laporan', (req, res) => { 
- res.sendFile(path.join(__dirname, 'hady-zen', 'kiyotaka', 'kiyopon.html'));
-});
-app.get('/memori', (req, res) => { 
- res.sendFile(path.join(__dirname, 'hady-zen', 'kiyotaka', 'memori.html'));
-});
-app.get('/tictactoe', (req, res) => { 
- res.sendFile(path.join(__dirname, 'hady-zen', 'kiyotaka', 'tictactoe.html'));
-});
-app.get('/skata', (req, res) => { 
- res.sendFile(path.join(__dirname, 'hady-zen', 'kiyotaka', 'skata.html'));
-});
-app.get('/ayanokoji', async (req, res) => {
-  const text = req.query.pesan || 'hai';
-
-  try {
-    const data = {
-      contents: [{ parts: [{ text: text }] }]
-    };
-    const response = await axios.post(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${aikey}`, data, {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
-    const ayanokoji = response.data.candidates[0].content.parts[0].text;
-    res.json({ pembuat: "Hady Zen", ayanokoji });
-  } catch (error) {
-    res.json({ error: 'Maaf ada kesalahan: ' + error.message });
-  }
-});
 app.use((req, res, next) => {
   res.status(404).sendFile(path.join(__dirname, 'hady-zen', 'kiyotaka', 'kiyotaka.html'));
 });
+
+process.on('unhandledRejection', error => console.log(logo.error + error));
+process.on('uncaughtException', error => console.log(logo.error + error));
