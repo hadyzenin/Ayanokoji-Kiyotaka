@@ -5,9 +5,9 @@ const fs = require('fs');
 module.exports = {
   hady: {
     nama: "sistem",
-    kuldown: 10,
+    kuldown: 6,
     penulis: "Hady Zen",
-    peran: 1,
+    peran: 2,
     tutor: ""
   },
 
@@ -31,7 +31,7 @@ Ayanokoji: async function ({ api, event, getStream }) {
      const nino = Date.now();
      const raffa = nino - chika;
 
-     const hadi = `[ ${ping(raffa)} | ${raffa} ] • 𝗦𝗜𝗦𝗧𝗘𝗠 ✨️\n`
+     const hadi = `[ ${ping(raffa)} | ${raffa} ] • 𝗦𝗜𝗦𝗧𝗘𝗠\n`
                  + `\n- Uptime: ${arif}`
                  + `\n- Ram: ${riley}`
                  + `\n- Disk: ${edi}`
