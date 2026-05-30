@@ -10,7 +10,7 @@ module.exports = {
   Ayanokoji: async function ({ api, event }) {
 
     api.sendMessage(
-      "nya",
+      "nya:v",
       event.threadID,
       event.messageID
     );
