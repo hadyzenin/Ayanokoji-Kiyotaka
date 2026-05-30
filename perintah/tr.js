@@ -2,7 +2,7 @@ const axios = require("axios");
 
 module.exports = {
   hady: {
-    namatrr: "tr",
+    nama: "tr",
     penulis: "Hady Zen",
     peran: 0,
     kuldown: 10,
