@@ -14,6 +14,27 @@ Tiktok: https://www.tiktok.com/@hady.zen.in <br>
 Github: https://github.com/HadyZen <br>
 Github: https://github.com/DyyRaa 
 
+## INFO
+
+Tempat json akun di akun.txt
+Config ada di file kiyotaka.json
+Mentahan perintah 
+```hady
+module.exports = {
+  hady: {
+    nama: "",
+    penulis: "Hady Zen",
+    kuldown: 10,
+    peran: 0,
+    tutor: ""
+  },
+
+  Ayanokoji: async function ({ api, event, args, getData, setUser, loadC }) {
+    api.sendMessage("Hady Zen'in", event.threadID, event.messageID);
+  }
+};
+```
+
 ## HOSTING 
 
 Rekomendasi hosting gratis 24/7
