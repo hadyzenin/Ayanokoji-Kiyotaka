@@ -191,7 +191,7 @@ if ((hady.peran == 2 || hady.peran == 1) && admin.includes(event.senderID) || ha
     await Ayanokoji({ api, event, args, getStream, loadC, setUser, getData });
     return;
 } else { 
-    api.setMessageReaction("🦔", event.messageID);
+    api.setMessageReaction("🫩", event.messageID);
 }
 
   } else {
@@ -208,17 +208,9 @@ if ((hady.peran == 2 || hady.peran == 1) && admin.includes(event.senderID) || ha
  });
 });
 
-setInterval(async () => {
-    try {
-       await api.getCurrentUserID()
-        console.log(logo.info + "Kiyopon masih on.");
-    } catch (err) {
-        console.log(logo.proses + "Menyambung ulang...");
-        login({ appState: JSON.parse(akun, zen) }, (err, api) => {
-      if (err) return process.exit();
-        })
-    }
-}, 1000 * 60 * 60)
+setInterval(() => {
+  console.log(ayanokoji('antioff') + "Copyright © HadyZen");
+}, 1000 * 60 * 4);
 
 app.listen(port, () => { });
 app.get('/', (req, res) => { 
