@@ -16,8 +16,10 @@ Github: https://github.com/DyyRaa
 
 ## INFO
 
-Tempat json akun di akun.txt
-Config ada di file kiyotaka.json
+Tempat json akun di akun.txt <br>
+Config ada di file kiyotaka.json <br>
+Data ada di hady.db format data json <br>
+File hady.json untuk data login dari hadyzen-fca <br>
 Mentahan perintah 
 ```hady
 module.exports = {
