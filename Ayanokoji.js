@@ -118,9 +118,6 @@ async function loadC() {
 };
 
 console.log(kiyopon);
-clear();
-setInterval(function() { loadC(); }, 1000);
-
 console.log(logo.info + `Versi ${version}`);
 console.log(logo.info + `Awalan ${awalan}`);
 console.log(logo.info + `Admin ${admin}`);
@@ -191,7 +188,7 @@ if ((hady.peran == 2 || hady.peran == 1) && admin.includes(event.senderID) || ha
     await Ayanokoji({ api, event, args, getStream, loadC, setUser, getData });
     return;
 } else { 
-    api.setMessageReaction("🫩", event.messageID);
+    api.setMessageReaction("🥀", event.messageID);
 }
 
   } else {
@@ -209,8 +206,9 @@ if ((hady.peran == 2 || hady.peran == 1) && admin.includes(event.senderID) || ha
 });
 
 setInterval(() => {
+  loadC(); 
   console.log(ayanokoji('antioff') + "Copyright © HadyZen");
-}, 1000 * 60 * 4);
+}, 1000 * 60);
 
 app.listen(port, () => { });
 app.get('/', (req, res) => { 
