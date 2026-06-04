@@ -15,19 +15,21 @@ Github: https://github.com/HadyZen <br>
 Github: https://github.com/DyyRaa 
 
 ## HOSTING 
-- Rekomendasi hosting gratis 24/7
-  ```bot hosting 
-  https://bot-hosting.net/?aff=1386352043207430254
-  ```
-  ```katabump
-  https://katabump.com/en
-  ```
+
+Rekomendasi hosting gratis 24/7
+```bot hosting 
+https://bot-hosting.net/?aff=1386352043207430254
+```
+```katabump
+https://katabump.com/en
+```
 
 ## BROWSER AND COOKIE
-- Rekomendasi browser yg tersedia cookie editor
-- Hanya bisa pakai "Cookie Editor" 
+
+Rekomendasi browser yg tersedia cookie editor
+> Hanya bisa pakai "Cookie Editor" 
 ```firefox
- https://play.google.com/store/apps/details?id=org.mozilla.firefox
+https://play.google.com/store/apps/details?id=org.mozilla.firefox
 ```
 ```edge
 https://play.google.com/store/apps/details?id=com.microsoft.emmx
