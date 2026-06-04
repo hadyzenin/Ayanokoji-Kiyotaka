@@ -16,6 +16,7 @@ Github: https://github.com/DyyRaa
 
 ## INFO
 
+Versi nodejs harus v16 <br>
 Tempat json akun di akun.txt <br>
 Config ada di file kiyotaka.json <br>
 Data ada di hady.db format data json <br>
