@@ -1,8 +1,8 @@
 {
   "name": "Kiyopon",
   "author": "Hady Zen",
-  "description": "Chatbot facebook by hady zen",
-  "version": "1.5.1",
+  "description": "Chatbot for Facebook",
+  "version": "1.5.2",
   "main": "index.js",
   "lockfileVersion": 3,
   "requires": true,
