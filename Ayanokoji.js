@@ -24,27 +24,7 @@ const tanggal = now.format('YYYY-MM-DD');
 const waktu = now.format('HH:mm:ss');
 global.Ayanokoji = { awalan: awalan, nama: nama, admin: admin, logo: logo, aikey: aikey, maintain: maintain, waktu: waktu, tanggal: tanggal };
 
-function clear() {
-  fs.readdir('assets', (err, files) => {
-    if (err) {
-      return;
-    }
-    files.forEach((file) => {
-      const filePath = path.join('assets', file);
-
-      fs.stat(filePath, (err, stats) => {
-        if (err) {
-          return;
-	}
-        if (stats.isFile()) {
-          fs.unlink(filePath, (err) => { });
-	} else if (stats.isDirectory()) {
-          clear(filePath);
-        }
-      });
-    });
-  });
-};
+// FUNCTION AYANOKOJI 
 async function getStream(hadi, isekai) {
     try {
   const kiyotaka = await axios.get(hadi, { responseType: 'arraybuffer' });
@@ -56,7 +36,6 @@ async function getStream(hadi, isekai) {
     throw error;
  }
 };
-
 let data = {};
 if (fs.existsSync(path.join('hady-zen', 'kiyopon.db'))) {
     data = JSON.parse(fs.readFileSync(path.join('hady-zen', 'kiyopon.db'), 'utf-8'));
@@ -70,7 +49,6 @@ function addData(id) {
     }
     simpan();
 };
-
 function setUser(id, item, baru) {
   if (item == "nama" || item == "daily") {
     data[id][item] = baru;
@@ -86,7 +64,6 @@ function setUser(id, item, baru) {
     }
   }
 };
-
 function getData(id) {
   return data[id] || data;
 };
@@ -99,24 +76,8 @@ function simpan() {
  });
 };
 
-async function DyAI(pesan) {
-const res = await axios.post("https://api.groq.com/openai/v1/chat/completions", {
-  model: "llama-3.1-8b-instant",
-  messages: [{ role: "user", content: pesan }]
-}, {
-  headers: {
-    "Authorization": `Bearer ${aikey}`,
-    "Content-Type": "application/json"
-  }
-});
-  
-  return res.data.choices[0].message.content;
-};
-
-async function loadC() {
-  fs.readFileSync('kiyotaka.json')
-};
-
+//LOG AYANOKOJI 
+clear();
 console.log(kiyopon);
 console.log(logo.info + `Versi ${version}`);
 console.log(logo.info + `Awalan ${awalan}`);
@@ -126,22 +87,25 @@ fs.readdir('./perintah', (err, files) => {
 console.log(ayanokoji('perintah') + `${shadow}.`);
 });
 
-if (!akun || akun.length < 0 || !JSON.parse(akun)) {
+//LOGIN AYANOKOJI 
+if (!akun || akun.trim().length === 0) {
  console.log(logo.error + 'Kamu belum memasukkan cookie.');
 }
-
-
-login({appState: JSON.parse(akun, zen)}, setting, (err, api) => {
+login({
+  appState: JSON.parse(akun)
+}, setting, (err, api) => {
 if (err) { 
   console.log(logo.error + `Terjadi kesalahan saat login: ${err.message || err.error}`);
- }
-      
+ }  
    api.listenMqtt((err, event) => {
-if (err) {
-  console.log(logo.error + `${err.message || err.error}`);
-  process.exit();
-}
-const body = event.body;
+  if (err) {
+    console.log(logo.error + (err.message || err.error)); return;
+  }
+  if (!event) return;
+  if (event.type !== "message" && event.type !== "message_reply") return;
+  if (!event.body) return;
+  const body = event.body;
+	   
 if (!body || global.Ayanokoji.maintain === true && !admin.includes(event.senderID) || chatdm === false && event.isGroup == false && !admin.includes(event.senderID)) return; 
   addData(event.senderID);
 if (body.toLowerCase() == "prefix") return api.sendMessage(`Awalan ${nama} adalah: ${awalan}`, event.threadID, event.messageID);
@@ -157,11 +121,9 @@ if (body.startsWith("Kiyopon")) {
  };
 if (!body.startsWith(awalan)) return console.log(logo.chat + `${event.senderID}: ${body}`);
    const cmd = body.slice(awalan.length).trim().split(/ +/g).shift().toLowerCase();
-	   
  async function hady_cmd(cmd, api, event) {
     const pipi = body?.replace(`${awalan}${cmd}`, "")?.trim();
     const args = pipi?.split(' ');
-
 	 try {
     const skibidi = await new Promise((resolve, reject) => { api.getThreadInfo(event.threadID, (err, info) => { if (err) reject(err); else resolve(info); }); });
     const fitri = skibidi.adminIDs.map(admin => admin.id);
@@ -170,13 +132,10 @@ if (!body.startsWith(awalan)) return console.log(logo.chat + `${event.senderID}:
    if (file.endsWith('.js')) {
     const anime = path.join(path.join(__dirname, '/perintah'), file);
     const { hady, Ayanokoji } = require(anime);
-
    if (hady && hady.nama === cmd && typeof Ayanokoji === 'function') {
   console.log(logo.info + `Menjalankan perintah ${hady.nama}`);
  const bhs = function(veng) { return bahasa[nakano][veng]; };	
-   
-   if (kuldown(event.senderID, hady.nama, hady.kuldown) == 'hadi') { 
-	   
+   if (kuldown(event.senderID, hady.nama, hady.kuldown) == 'hadi') {    
 if (hady.peran == 0 || !hady.peran) {
     await Ayanokoji({ api, event, args, getStream, loadC, setUser, getData });
     return;
@@ -190,7 +149,6 @@ if ((hady.peran == 2 || hady.peran == 1) && admin.includes(event.senderID) || ha
 } else { 
     api.setMessageReaction("🥀", event.messageID);
 }
-
   } else {
    api.sendMessage("Sabar dong :v", event.threadID, event.messageID);
    }
@@ -205,12 +163,50 @@ if ((hady.peran == 2 || hady.peran == 1) && admin.includes(event.senderID) || ha
  });
 });
 
-setInterval(() => {
-  loadC(); 
-  console.log(ayanokoji('antioff') + "Copyright © HadyZen");
-}, 1000 * 60);
+//AI AYANOKOJI 
+async function DyAI(pesan) {
+const res = await axios.post("https://api.groq.com/openai/v1/chat/completions", {
+  model: "llama-3.1-8b-instant",
+  messages: [{ role: "user", content: pesan }]
+}, {
+  headers: {
+    "Authorization": `Bearer ${aikey}`,
+    "Content-Type": "application/json"
+  }
+}); 
+  return res.data.choices[0].message.content;
+};
+async function loadC() {
+  fs.readFileSync('kiyotaka.json')
+};
 
+//HAPUS CACHE AYANOKOJI 
+function clear() {
+  fs.readdir('assets', (err, files) => {
+    if (err) {
+      return;
+    }
+    files.forEach((file) => {
+      const filePath = path.join('assets', file);
+      fs.stat(filePath, (err, stats) => {
+        if (err) {
+          return;
+	}
+        if (stats.isFile()) {
+          fs.unlink(filePath, (err) => { });
+	} else if (stats.isDirectory()) {
+          clear(filePath);
+        }
+      });
+    });
+  });
+};
+
+//WEBVIEW AYANOKOJI 
 app.listen(port, () => { });
+app.get("/", (_, res) => {
+  res.send("Ayanokoji Online");
+});
 app.get('/', (req, res) => { 
  res.sendFile(path.join(__dirname, 'hady-zen', 'kiyotaka', 'ayanokoji.html'));
 });
