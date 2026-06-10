@@ -44,7 +44,7 @@ if (fs.existsSync(path.join('hady-zen', 'kiyopon.db'))) {
 function addData(id) {
     if (data[id]) {
     } else {
-        data[id] = { "nama": "Kiyopon", "yen": 0, "exp": 0, "level": 1, "daily": null };
+        data[id] = { "nama": "Kiyopon", "yen": 0, "exp": 0, "level": 1, "chat": 0, "daily": null };
         console.log(ayanokoji('database') + `${id} pengguna baru.`);
     }
     simpan();
@@ -105,7 +105,27 @@ if (err) {
   if (event.type !== "message" && event.type !== "message_reply") return;
   if (!event.body) return;
   const body = event.body;
-	   
+
+// YEN AND LV UP
+  addData(event.senderID);
+  data[event.senderID].chat++;
+if (data[event.senderID].chat >= 6) {
+  data[event.senderID].chat = 0;
+  data[event.senderID].yen += 1;
+  data[event.senderID].exp += 8;
+
+  if (data[event.senderID].exp >= 100) {
+    data[event.senderID].exp -= 100;
+    data[event.senderID].level += 1;
+    api.sendMessage(
+      `${data[event.senderID].nama}, Kamu naik level jadi ${data[event.senderID].level}.`,
+      event.threadID
+    );
+  }
+  simpan();
+}
+
+//ONCHAT AYANOKOJI 
 if (!body || global.Ayanokoji.maintain === true && !admin.includes(event.senderID) || chatdm === false && event.isGroup == false && !admin.includes(event.senderID)) return; 
   addData(event.senderID);
 if (body.toLowerCase() == "prefix") return api.sendMessage(`Awalan ${nama} adalah: ${awalan}`, event.threadID, event.messageID);
