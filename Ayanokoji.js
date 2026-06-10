@@ -113,14 +113,16 @@ if (data[event.senderID].chat >= 6) {
   data[event.senderID].chat = 0;
   data[event.senderID].yen += 1;
   data[event.senderID].exp += 8;
-
+console.log(ayanokoji('yen') + `${data[event.senderID].nama} mendapatkan yen dan exp.`);
+	
   if (data[event.senderID].exp >= 100) {
     data[event.senderID].exp -= 100;
     data[event.senderID].level += 1;
     api.sendMessage(
-      `${data[event.senderID].nama}, Kamu naik level jadi ${data[event.senderID].level}.`,
+      `${data[event.senderID].nama}, Kamu naik level menjadi ${data[event.senderID].level}.`,
       event.threadID
     );
+console.log(ayanokoji('level') + `${data[event.senderID].nama} naik level.`);
   }
   simpan();
 }
@@ -131,7 +133,7 @@ if (!body || global.Ayanokoji.maintain === true && !admin.includes(event.senderI
 if (body.toLowerCase() == "prefix") return api.sendMessage(`Awalan ${nama} adalah: ${awalan}`, event.threadID, event.messageID);
 if (body.startsWith("Kiyopon")) {
    const ijo = body.slice(5) || " hai";
-   const harmonie = " Prompt: Kamu role play sebagai Ayanokoji Kiyotaka. User: " + ijo;  
+   const harmonie = " Prompt: Kamu harus ramah dan seperti role play, responmu singkat jangan terlalu detail, namamu Kiyopon. User: " + ijo;  
    DyAI(harmonie).then(jawaban => {
     return api.sendMessage(jawaban, event.threadID, event.messageID);
   }).catch(e => {
