@@ -9,6 +9,7 @@
  const path = require('path');
  const axios = require('axios');
  const cron = require('node-cron');
+ const cheerio = require('cheerio');
  const { spawn } = require('child_process');
  const akun = fs.readFileSync('akun.txt', 'utf8');
  const { version } = require('./package');
@@ -36,6 +37,38 @@ async function getStream(hadi, isekai) {
     throw error;
  }
 };
+async function fbid(link) {
+	try {
+		const response = await axios.post(
+			'https://seomagnifier.com/fbid',
+			new URLSearchParams({
+				'facebook': '1',
+				'sitelink': link
+			}),
+			{
+				headers: {
+					'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
+					'Cookie': 'PHPSESSID=0d8feddd151431cf35ccb0522b056dc6'
+				}
+			}
+		);
+		const id = response.data;
+		if (isNaN(id)) {
+			const html = await axios.get(link);
+			const $ = cheerio.load(html.data);
+			const el = $('meta[property="al:android:url"]').attr('content');
+			if (!el) {
+				throw new Error('UID not found');
+			}
+			const number = el.split('/').pop();
+			return number;
+		}
+		return id;
+	} catch (error) {
+		throw new Error('An unexpected error occurred. Please try again.');
+	}
+}
+
 let data = {};
 if (fs.existsSync(path.join('hady-zen', 'kiyopon.db'))) {
     data = JSON.parse(fs.readFileSync(path.join('hady-zen', 'kiyopon.db'), 'utf-8'));
@@ -159,14 +192,14 @@ if (!body.startsWith(awalan)) return console.log(logo.chat + `${event.senderID}:
  const bhs = function(veng) { return bahasa[nakano][veng]; };	
    if (kuldown(event.senderID, hady.nama, hady.kuldown) == 'hadi') {    
 if (hady.peran == 0 || !hady.peran) {
-    await Ayanokoji({ api, event, args, getStream, loadC, setUser, getData });
+    await Ayanokoji({ api, event, args, getStream, loadC, setUser, getData, fbid });
     return;
 }
 if ((hady.peran == 2 || hady.peran == 1) && admin.includes(event.senderID) || hady.peran == 0) {
-    await Ayanokoji({ api, event, args, getStream, loadC, setUser, getData });
+    await Ayanokoji({ api, event, args, getStream, loadC, setUser, getData, fbid });
     return;
 } else if (hady.peran == 1 && fitri.join(', ').includes(event.senderID) || hady.peran == 0) {
-    await Ayanokoji({ api, event, args, getStream, loadC, setUser, getData });
+    await Ayanokoji({ api, event, args, getStream, loadC, setUser, getData, fbid });
     return;
 } else { 
     api.setMessageReaction("🥀", event.messageID);
