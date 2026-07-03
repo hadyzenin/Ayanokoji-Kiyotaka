@@ -37,10 +37,7 @@ module.exports = {
         .map(item => item[0])
         .join("");
 
-      api.sendMessage(
-`𝗧𝗲𝗿𝗷𝗲𝗺𝗮𝗵𝗮𝗻
-
-${hasil}`,
+      api.sendMessage(hasil,
         event.threadID,
         event.messageID
       );
