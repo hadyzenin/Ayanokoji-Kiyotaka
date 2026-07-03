@@ -12,7 +12,7 @@ Nama: Hady Zen'in <br>
 Facebook: https://www.facebook.com/hady.zen.in <br>
 Tiktok: https://www.tiktok.com/@hady.zen.in <br>
 Github: https://github.com/HadyZen <br>
-Github: https://github.com/DyyRaa 
+Github: https://github.com/hadyzenin
 
 ## INFO
 
