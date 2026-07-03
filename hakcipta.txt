@@ -1,13 +1,13 @@
-Penulis @DyyRaa @HadyZen
+Penulis @hadyzenin @HadyZen
 ! Kode sumber ditulis oleh Hady Zen'in, mohon jangan mengubah nama penulis di mana pun (Harap menjadi pengguna yang cerdas dan hormati penulis karena mereka telah bermurah hati tanpa meminta keuntungan apa pun)
-! Kode sumber resmi: https://github.com/DyyRaa/Kiyopon
+! Kode sumber resmi: https://github.com/hadyzenin/Ayanokoji-Kiyotaka
 ! Jika Anda tidak mengunduh kode sumber dari alamat di atas, Anda menggunakan versi yang tidak dikenal dan berisiko akun Anda diretas. 
 Terima kasih telah menggunakan
 
 Sosmed: 
 ! Facebook: hady.zen.in
 ! Tiktok: @hady.zen.in
-! Github: DyyRaa / HadyZen
+! Github: hadyzenin / HadyZen
 ! Npmjs: @hadyzenin
 
 Indonesia:
