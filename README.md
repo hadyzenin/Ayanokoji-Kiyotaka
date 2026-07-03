@@ -32,7 +32,7 @@ module.exports = {
     tutor: ""
   },
 
-  Ayanokoji: async function ({ api, event, args, getData, setUser, loadC }) {
+  Ayanokoji: async function ({ api, event, args, getData, setUser, fbid }) {
     api.sendMessage("Hady Zen'in", event.threadID, event.messageID);
   }
 };
