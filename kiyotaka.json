@@ -1,13 +1,16 @@
 {
   "nama": "Kiyopon",
   "awalan": ".",
-  "port": 8080,
-  "proxy": "103.179.217.242",
-  "aikey": "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",
+  "imgbbkey": "f0f59643d6f29a07013b1c096fa56e2e",
+  "aikey": "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",
   "chatdm": false,
   "maintain": false,
-  "zonawaktu": "Asia/Jakarta", 
-  "admin": ["100088085177610"], 
+  "zonawaktu": "Asia/Jakarta",
+  "admin": [
+    "100088085177610",
+    "61585506972781",
+    "61590702691083"
+  ],
   "setting": {
     "forceLogin": true,
     "listenEvents": true,
@@ -18,5 +21,5 @@
     "selfListenEvent": true,
     "autoMarkDelivery": false,
     "autoReconnect": false
- }
+  }
 }
