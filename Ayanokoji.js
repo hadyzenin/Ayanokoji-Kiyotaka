@@ -14,16 +14,15 @@
  const akun = fs.readFileSync('akun.txt', 'utf8');
  const { version } = require('./package');
  const gradient = require('gradient-string');
- const { awalan, nama, admin, proxy, port, maintain, chatdm, aikey, setting, zonawaktu } = require('./kiyotaka');
+ const { awalan, nama, admin, maintain, chatdm, imgbbkey, aikey, setting, zonawaktu } = require('./kiyotaka');
  const { kuldown } = require('./hady-zen/kuldown');
  const moment = require('moment-timezone');
  const now = moment.tz(zonawaktu);
 
-const zen = { host: proxy, port: port };
 const kiyopon = gradient("#ADD8E6", "#4682B4", "#00008B")(logo.ayanokoji);
 const tanggal = now.format('YYYY-MM-DD');
 const waktu = now.format('HH:mm:ss');
-global.Ayanokoji = { awalan: awalan, nama: nama, admin: admin, logo: logo, aikey: aikey, maintain: maintain, waktu: waktu, tanggal: tanggal };
+global.Ayanokoji = { awalan: awalan, nama: nama, admin: admin, logo: logo, imgbbkey: imgbbkey,  aikey: aikey, maintain: maintain, waktu: waktu, tanggal: tanggal };
 
 // FUNCTION AYANOKOJI 
 async function getStream(hadi, isekai) {
@@ -67,7 +66,7 @@ async function fbid(link) {
 	} catch (error) {
 		throw new Error('An unexpected error occurred. Please try again.');
 	}
-}
+};
 
 let data = {};
 if (fs.existsSync(path.join('hady-zen', 'kiyopon.db'))) {
@@ -164,9 +163,9 @@ console.log(ayanokoji('level') + `${data[event.senderID].nama} naik level.`);
 if (!body || global.Ayanokoji.maintain === true && !admin.includes(event.senderID) || chatdm === false && event.isGroup == false && !admin.includes(event.senderID)) return; 
   addData(event.senderID);
 if (body.toLowerCase() == "prefix") return api.sendMessage(`Awalan ${nama} adalah: ${awalan}`, event.threadID, event.messageID);
-if (body.startsWith("Kiyopon")) {
+if (body.toLowerCase().startsWith("kiyopon")) {
    const ijo = body.slice(5) || " hai";
-   const harmonie = " Prompt: Kamu harus ramah dan seperti role play, responmu singkat jangan terlalu detail, namamu Kiyopon. User: " + ijo;  
+   const harmonie = "Prompt: Namamu adalah Kiyopon, respon kamu harus ramah, modern, gaul, suka becanda, dan singkat. User: " + ijo;  
    DyAI(harmonie).then(jawaban => {
     return api.sendMessage(jawaban, event.threadID, event.messageID);
   }).catch(e => {
@@ -192,14 +191,14 @@ if (!body.startsWith(awalan)) return console.log(logo.chat + `${event.senderID}:
  const bhs = function(veng) { return bahasa[nakano][veng]; };	
    if (kuldown(event.senderID, hady.nama, hady.kuldown) == 'hadi') {    
 if (hady.peran == 0 || !hady.peran) {
-    await Ayanokoji({ api, event, args, getStream, loadC, setUser, getData, fbid });
+    await Ayanokoji({ api, event, args, getStream, setUser, getData, fbid });
     return;
 }
 if ((hady.peran == 2 || hady.peran == 1) && admin.includes(event.senderID) || hady.peran == 0) {
-    await Ayanokoji({ api, event, args, getStream, loadC, setUser, getData, fbid });
+    await Ayanokoji({ api, event, args, getStream, setUser, getData, fbid });
     return;
 } else if (hady.peran == 1 && fitri.join(', ').includes(event.senderID) || hady.peran == 0) {
-    await Ayanokoji({ api, event, args, getStream, loadC, setUser, getData, fbid });
+    await Ayanokoji({ api, event, args, getStream, setUser, getData, fbid });
     return;
 } else { 
     api.setMessageReaction("🥀", event.messageID);
@@ -231,9 +230,6 @@ const res = await axios.post("https://api.groq.com/openai/v1/chat/completions", 
 }); 
   return res.data.choices[0].message.content;
 };
-async function loadC() {
-  fs.readFileSync('kiyotaka.json')
-};
 
 //HAPUS CACHE AYANOKOJI 
 function clear() {
@@ -258,10 +254,6 @@ function clear() {
 };
 
 //WEBVIEW AYANOKOJI 
-app.listen(port, () => { });
-app.get("/", (_, res) => {
-  res.send("Ayanokoji Online");
-});
 app.get('/', (req, res) => { 
  res.sendFile(path.join(__dirname, 'hady-zen', 'kiyotaka', 'ayanokoji.html'));
 });
