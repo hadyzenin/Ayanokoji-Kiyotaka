@@ -2,6 +2,7 @@ const os = require('os');
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
 const fs = require('fs');
+const { version } = require("../package.json");
 module.exports = {
   hady: {
     nama: "sistem",
@@ -31,7 +32,7 @@ Ayanokoji: async function ({ api, event, getStream }) {
      const nino = Date.now();
      const raffa = nino - chika;
 
-     const hadi = `[ ${ping(raffa)} | ${raffa} ] • 𝗦𝗜𝗦𝗧𝗘𝗠\n`
+     const hadi = `${ping(raffa)} KIYOPON V${version}\n`
                  + `\n- Uptime: ${arif}`
                  + `\n- Ram: ${riley}`
                  + `\n- Disk: ${edi}`
