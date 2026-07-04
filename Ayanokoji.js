@@ -76,7 +76,7 @@ if (fs.existsSync(path.join('hady-zen', 'kiyopon.db'))) {
 function addData(id) {
     if (data[id]) {
     } else {
-        data[id] = { "nama": "Kiyopon", "yen": 0, "exp": 0, "level": 1, "chat": 0, "pp": "", "bg": "", "title": "Noob", "flag": "jp", "daily": null };
+        data[id] = { "nama": "Kiyopon", "yen": 0, "exp": 0, "level": 1, "chat": 0, "pp": "", "bg": "", "title": "Dark Sistem", "flag": "id", "daily": null };
         console.log(ayanokoji('database') + `${id} pengguna baru.`);
     }
     simpan();
