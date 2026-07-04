@@ -11,11 +11,11 @@ module.exports = {
   const { yen, exp, daily } = getData(event.senderID);
     
     if (daily == null || daily !== global.Ayanokoji.tanggal) { 
-  const duit = Math.ceil(Math.random() * 10);
+  const duit = Math.ceil(Math.random() * 20);
   setUser(event.senderID, 'yen', yen + duit);
-  setUser(event.senderID, 'exp', exp + 10);
+  setUser(event.senderID, 'exp', exp + 80);
   setUser(event.senderID, 'daily', global.Ayanokoji.tanggal);
-    api.sendMessage(`Kamu berhasil mengklaim ${duit} yen dan 10 exp`, event.threadID, event.messageID);
+    api.sendMessage(`Kamu berhasil mengklaim ${duit} yen dan 80 exp`, event.threadID, event.messageID);
     } else {
     api.sendMessage('Kamu sudah mengklaim hadiah harian.', event.threadID, event.messageID);
   }
