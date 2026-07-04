@@ -76,26 +76,36 @@ if (fs.existsSync(path.join('hady-zen', 'kiyopon.db'))) {
 function addData(id) {
     if (data[id]) {
     } else {
-        data[id] = { "nama": "Kiyopon", "yen": 0, "exp": 0, "level": 1, "chat": 0, "daily": null };
+        data[id] = { "nama": "Kiyopon", "yen": 0, "exp": 0, "level": 1, "chat": 0, "pp": "", "bg": "", "title": "Noob", "flag": "jp", "daily": null };
         console.log(ayanokoji('database') + `${id} pengguna baru.`);
     }
     simpan();
 };
-function setUser(id, item, baru) {
-  if (item == "nama" || item == "daily") {
-    data[id][item] = baru;
-    simpan();
-    console.log(ayanokoji('database') + 'Pembaruan berhasil.');
-  } else if (item == "yen" || item == "exp" || item == "level") {
-    if (typeof baru === 'number') {
-      data[id][item] = baru;
-      simpan();    
-      console.log(ayanokoji('database') + 'Pembaruan berhasil.');
-    } else {
-      console.log(ayanokoji('database') + 'Nilai untuk ' + item + ' harus berupa angka.');
+
+function setUser(id, item, value) {
+  if (!data[id]) return;
+  const stringItem = ["nama", "pp", "bg", "title", "flag", "daily"];
+  const numberItem = ["yen", "exp", "level", "chat"];
+  if (stringItem.includes(item)) {
+    data[id][item] = value;
+  } else if (numberItem.includes(item)) {
+    if (typeof value !== "number") {
+      return console.log(
+        ayanokoji("database") + `${item} harus berupa angka.`
+      );
     }
+    data[id][item] = value;
+  } else {
+    return console.log(
+      ayanokoji("database") + `Item "${item}" tidak ditemukan.`
+    );
   }
-};
+  simpan();
+  console.log(
+    ayanokoji("database") + `${item} berhasil diperbarui.`
+  );
+}
+
 function getData(id) {
   return data[id] || data;
 };
@@ -140,24 +150,27 @@ if (err) {
 
 // YEN AND LV UP
   addData(event.senderID);
-  data[event.senderID].chat++;
-if (data[event.senderID].chat >= 6) {
-  data[event.senderID].chat = 0;
-  data[event.senderID].yen += 1;
-  data[event.senderID].exp += 8;
-console.log(ayanokoji('yen') + `${data[event.senderID].nama} mendapatkan yen dan exp.`);
-	
+data[event.senderID].chat++;
+
+if (data[event.senderID].chat % 10 === 0) {
+  data[event.senderID].yen += 3;
+  data[event.senderID].exp += 10;
+  console.log(
+    ayanokoji("yen") +
+    `${data[event.senderID].nama} mendapatkan 3 Yen dan 10 Exp.`
+  );
+}
   if (data[event.senderID].exp >= 100) {
     data[event.senderID].exp -= 100;
     data[event.senderID].level += 1;
     api.sendMessage(
-      `${data[event.senderID].nama}, Kamu naik level menjadi ${data[event.senderID].level}.`,
+      `Selamat ${data[event.senderID].nama}, Kamu telah naik ke level ${data[event.senderID].level}!`,
       event.threadID
     );
 console.log(ayanokoji('level') + `${data[event.senderID].nama} naik level.`);
   }
   simpan();
-}
+
 
 //ONCHAT AYANOKOJI 
 if (!body || global.Ayanokoji.maintain === true && !admin.includes(event.senderID) || chatdm === false && event.isGroup == false && !admin.includes(event.senderID)) return; 
