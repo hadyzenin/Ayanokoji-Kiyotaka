@@ -5,16 +5,17 @@
  const app = express();
  const login = require('hadyzen-fca');
  const { logo, warna, font, ayanokoji } = require('./hady-zen/log');
- const fs = require('fs');
  const path = require('path');
  const axios = require('axios');
  const cron = require('node-cron');
+ const { getStream, fbid, DyAI } = require('./hady-zen/func');
  const cheerio = require('cheerio');
  const { spawn } = require('child_process');
  const akun = fs.readFileSync('akun.txt', 'utf8');
  const { version } = require('./package');
  const gradient = require('gradient-string');
  const { awalan, nama, admin, maintain, chatdm, imgbbkey, aikey, setting, zonawaktu } = require('./kiyotaka');
+ const fs = require('fs');
  const { kuldown } = require('./hady-zen/kuldown');
  const moment = require('moment-timezone');
  const now = moment.tz(zonawaktu);
@@ -23,50 +24,6 @@ const kiyopon = gradient("#ADD8E6", "#4682B4", "#00008B")(logo.ayanokoji);
 const tanggal = now.format('YYYY-MM-DD');
 const waktu = now.format('HH:mm:ss');
 global.Ayanokoji = { awalan: awalan, nama: nama, admin: admin, logo: logo, imgbbkey: imgbbkey,  aikey: aikey, maintain: maintain, waktu: waktu, tanggal: tanggal };
-
-// FUNCTION AYANOKOJI 
-async function getStream(hadi, isekai) {
-    try {
-  const kiyotaka = await axios.get(hadi, { responseType: 'arraybuffer' });
-  const otaku = Buffer.from(kiyotaka.data, 'binary');
-  const wibu = path.join(__dirname, 'assets', isekai);
-    fs.writeFileSync(wibu, otaku);
-      return wibu;
-  } catch (error) {
-    throw error;
- }
-};
-async function fbid(link) {
-	try {
-		const response = await axios.post(
-			'https://seomagnifier.com/fbid',
-			new URLSearchParams({
-				'facebook': '1',
-				'sitelink': link
-			}),
-			{
-				headers: {
-					'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
-					'Cookie': 'PHPSESSID=0d8feddd151431cf35ccb0522b056dc6'
-				}
-			}
-		);
-		const id = response.data;
-		if (isNaN(id)) {
-			const html = await axios.get(link);
-			const $ = cheerio.load(html.data);
-			const el = $('meta[property="al:android:url"]').attr('content');
-			if (!el) {
-				throw new Error('UID not found');
-			}
-			const number = el.split('/').pop();
-			return number;
-		}
-		return id;
-	} catch (error) {
-		throw new Error('An unexpected error occurred. Please try again.');
-	}
-};
 
 let data = {};
 if (fs.existsSync(path.join('hady-zen', 'kiyopon.db'))) {
@@ -229,20 +186,6 @@ if ((hady.peran == 2 || hady.peran == 1) && admin.includes(event.senderID) || ha
  hady_cmd(cmd, api, event);
  });
 });
-
-//AI AYANOKOJI 
-async function DyAI(pesan) {
-const res = await axios.post("https://api.groq.com/openai/v1/chat/completions", {
-  model: "llama-3.1-8b-instant",
-  messages: [{ role: "user", content: pesan }]
-}, {
-  headers: {
-    "Authorization": `Bearer ${aikey}`,
-    "Content-Type": "application/json"
-  }
-}); 
-  return res.data.choices[0].message.content;
-};
 
 //HAPUS CACHE AYANOKOJI 
 function clear() {
