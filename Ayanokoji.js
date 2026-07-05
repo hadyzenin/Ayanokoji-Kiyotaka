@@ -20,7 +20,7 @@
 const kiyopon = gradient("#ADD8E6", "#4682B4", "#00008B")(logo.ayanokoji);
 const tanggal = now.format('YYYY-MM-DD');
 const waktu = now.format('HH:mm:ss');
-global.Ayanokoji = { awalan: awalan, nama: nama, admin: admin, logo: logo, imgbbkey: imgbbkey,  aikey: aikey, maintain: maintain, waktu: waktu, tanggal: tanggal };
+global.Ayanokoji = { awalan: awalan, nama: nama, admin: admin, logo: logo, imgbbkey: imgbbkey,  maintain: maintain, waktu: waktu, tanggal: tanggal };
 
 //DATA AYANOKOJI 
 let data = {};
