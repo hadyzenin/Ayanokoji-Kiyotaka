@@ -1,3 +1,6 @@
+/* Hady Zen'in */
+/* dibuat oleh Hady with love - Copyright HadyZenin 2025 */
+
 async function getStream(hadi, isekai) {
     try {
   const kiyotaka = await axios.get(hadi, { responseType: 'arraybuffer' });
@@ -54,3 +57,5 @@ const res = await axios.post("https://api.groq.com/openai/v1/chat/completions", 
 }); 
   return res.data.choices[0].message.content;
 };
+
+module.exports = { getStream, fbid, DyAI };
