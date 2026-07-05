@@ -1,6 +1,10 @@
 /* Hady Zen'in */
 /* dibuat oleh Hady with love - Copyright HadyZenin 2025 */
 
+ const fs = require('fs');
+ const path = require('path');
+ const axios = require('axios');
+
 async function getStream(hadi, isekai) {
     try {
   const kiyotaka = await axios.get(hadi, { responseType: 'arraybuffer' });
