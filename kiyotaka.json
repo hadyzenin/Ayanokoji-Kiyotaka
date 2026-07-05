@@ -1,5 +1,5 @@
 {
-  "nama": "Kiyopon",
+  "nama": "kiyopon", 
   "awalan": ".",
   "imgbbkey": "f0f59643d6f29a07013b1c096fa56e2e",
   "aikey": "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",
@@ -7,9 +7,7 @@
   "maintain": false,
   "zonawaktu": "Asia/Jakarta",
   "admin": [
-    "100088085177610",
-    "61585506972781",
-    "61590702691083"
+    "100088085177610"
   ],
   "setting": {
     "forceLogin": true,
