@@ -5,10 +5,7 @@
  const path = require('path');
  const axios = require('axios');
  const cheerio = require('cheerio');
-const { aikey } = require('../kiyotaka');
-
-const path = require('path');
-const fs = require('fs');
+ const { aikey } = require('../kiyotaka');
 
 function clear() {
     const assetsDir = path.join(__dirname, '..', 'assets');
