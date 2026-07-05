@@ -7,11 +7,11 @@
  const fs = require('fs');
  const path = require('path');
  const login = require('hadyzen-fca');
- const { getStream, fbid, DyAI } = require('./hady-zen/func');
+ const { clear, getStream, fbid, DyAI } = require('./hady-zen/func');
  const akun = fs.readFileSync('akun.txt', 'utf8');
  const { version } = require('./package');
  const gradient = require('gradient-string');
- const { awalan, nama, admin, maintain, chatdm, imgbbkey, aikey, setting, zonawaktu } = require('./kiyotaka');
+ const { awalan, nama, admin, maintain, chatdm, imgbbkey, setting, zonawaktu } = require('./kiyotaka');
  
  const { kuldown } = require('./hady-zen/kuldown');
  const moment = require('moment-timezone');
@@ -22,6 +22,7 @@ const tanggal = now.format('YYYY-MM-DD');
 const waktu = now.format('HH:mm:ss');
 global.Ayanokoji = { awalan: awalan, nama: nama, admin: admin, logo: logo, imgbbkey: imgbbkey,  aikey: aikey, maintain: maintain, waktu: waktu, tanggal: tanggal };
 
+//DATA AYANOKOJI 
 let data = {};
 if (fs.existsSync(path.join('hady-zen', 'kiyopon.db'))) {
     data = JSON.parse(fs.readFileSync(path.join('hady-zen', 'kiyopon.db'), 'utf-8'));
@@ -130,7 +131,7 @@ console.log(ayanokoji('level') + `${data[event.senderID].nama} naik level.`);
 if (global.Ayanokoji.maintain === true && !admin.includes(event.senderID) || chatdm === false && event.isGroup == false && !admin.includes(event.senderID)) return; 
   addData(event.senderID);
 if (body.toLowerCase() == "prefix") return api.sendMessage(`Awalan ${nama} adalah: ${awalan}`, event.threadID, event.messageID);
-if (body.toLowerCase().startsWith("kiyopon")) {
+if (body.toLowerCase().startsWith(nama)) {
    const ijo = body.slice(5) || " hai";
    const harmonie = "Prompt: Namamu adalah Kiyopon, respon kamu harus ramah, modern, gaul, suka becanda, dan singkat. User: " + ijo;  
    DyAI(harmonie).then(jawaban => {
@@ -167,7 +168,7 @@ if ((hady.peran == 2 || hady.peran == 1) && admin.includes(event.senderID) || ha
     await Ayanokoji({ api, event, args, getStream, setUser, getData, fbid });
     return;
 } else { 
-    api.setMessageReaction("🥀", event.messageID);
+    api.setMessageReaction("🚫", event.messageID);
 }
   } else {
    api.sendMessage("Sabar dong :v", event.threadID, event.messageID);
@@ -182,28 +183,6 @@ if ((hady.peran == 2 || hady.peran == 1) && admin.includes(event.senderID) || ha
  hady_cmd(cmd, api, event);
  });
 });
-
-//HAPUS CACHE AYANOKOJI 
-function clear() {
-  fs.readdir('assets', (err, files) => {
-    if (err) {
-      return;
-    }
-    files.forEach((file) => {
-      const filePath = path.join('assets', file);
-      fs.stat(filePath, (err, stats) => {
-        if (err) {
-          return;
-	}
-        if (stats.isFile()) {
-          fs.unlink(filePath, (err) => { });
-	} else if (stats.isDirectory()) {
-          clear(filePath);
-        }
-      });
-    });
-  });
-};
 
 //WEBVIEW AYANOKOJI 
 app.get('/', (req, res) => { 
