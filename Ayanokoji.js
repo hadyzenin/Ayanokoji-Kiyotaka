@@ -3,15 +3,11 @@
 
  const express = require('express');
  const app = express();
- const { logo, warna, font, ayanokoji } = require('./hady-zen/log');
+ const { logo, ayanokoji } = require('./hady-zen/log');
  const fs = require('fs');
  const path = require('path');
- const axios = require('axios');
  const login = require('hadyzen-fca');
- const cron = require('node-cron');
  const { getStream, fbid, DyAI } = require('./hady-zen/func');
- const cheerio = require('cheerio');
- const { spawn } = require('child_process');
  const akun = fs.readFileSync('akun.txt', 'utf8');
  const { version } = require('./package');
  const gradient = require('gradient-string');
@@ -131,7 +127,7 @@ console.log(ayanokoji('level') + `${data[event.senderID].nama} naik level.`);
 
 
 //ONCHAT AYANOKOJI 
-if (!body || global.Ayanokoji.maintain === true && !admin.includes(event.senderID) || chatdm === false && event.isGroup == false && !admin.includes(event.senderID)) return; 
+if (global.Ayanokoji.maintain === true && !admin.includes(event.senderID) || chatdm === false && event.isGroup == false && !admin.includes(event.senderID)) return; 
   addData(event.senderID);
 if (body.toLowerCase() == "prefix") return api.sendMessage(`Awalan ${nama} adalah: ${awalan}`, event.threadID, event.messageID);
 if (body.toLowerCase().startsWith("kiyopon")) {
@@ -159,7 +155,6 @@ if (!body.startsWith(awalan)) return console.log(logo.chat + `${event.senderID}:
     const { hady, Ayanokoji } = require(anime);
    if (hady && hady.nama === cmd && typeof Ayanokoji === 'function') {
   console.log(logo.info + `Menjalankan perintah ${hady.nama}`);
- const bhs = function(veng) { return bahasa[nakano][veng]; };	
    if (kuldown(event.senderID, hady.nama, hady.kuldown) == 'hadi') {    
 if (hady.peran == 0 || !hady.peran) {
     await Ayanokoji({ api, event, args, getStream, setUser, getData, fbid });
