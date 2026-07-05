@@ -2,7 +2,7 @@
 
 <h1 align="center">KIYOPON V1 </h1>
 
-> Chatbot for Facebook 🦔 <br>
+> Chatbot for Facebook 💛🩵 <br>
 
 ![hady](https://skillicons.dev/icons?i=html,css,js,nodejs,bash&theme=dark) 
 
@@ -32,7 +32,7 @@ module.exports = {
     tutor: ""
   },
 
-  Ayanokoji: async function ({ api, event, args, getData, setUser, fbid }) {
+  Ayanokoji: async function ({ api, event, args, getStream, getData, setUser, fbid }) {
     api.sendMessage("Hady Zen'in", event.threadID, event.messageID);
   }
 };
