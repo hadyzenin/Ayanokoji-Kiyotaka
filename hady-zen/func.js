@@ -5,6 +5,7 @@
  const path = require('path');
  const axios = require('axios');
  const cheerio = require('cheerio');
+const { aikey } = require('../kiyotaka');
 
 async function getStream(hadi, isekai) {
     try {
