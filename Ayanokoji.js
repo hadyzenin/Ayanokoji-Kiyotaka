@@ -3,10 +3,11 @@
 
  const express = require('express');
  const app = express();
- const login = require('hadyzen-fca');
  const { logo, warna, font, ayanokoji } = require('./hady-zen/log');
+ const fs = require('fs');
  const path = require('path');
  const axios = require('axios');
+ const login = require('hadyzen-fca');
  const cron = require('node-cron');
  const { getStream, fbid, DyAI } = require('./hady-zen/func');
  const cheerio = require('cheerio');
@@ -15,7 +16,7 @@
  const { version } = require('./package');
  const gradient = require('gradient-string');
  const { awalan, nama, admin, maintain, chatdm, imgbbkey, aikey, setting, zonawaktu } = require('./kiyotaka');
- const fs = require('fs');
+ 
  const { kuldown } = require('./hady-zen/kuldown');
  const moment = require('moment-timezone');
  const now = moment.tz(zonawaktu);
