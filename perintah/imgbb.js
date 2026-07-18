@@ -22,11 +22,11 @@ module.exports = {
       });
       const formData = new from();
       formData.append('image', Buffer.from(miku.data, 'binary'), {
-        filename: 'hady-zen.png'
+        filename: 'hady.png'
       });
       const nino = await axios.post('https://api.imgbb.com/1/upload', formData, {
         params: {
-          key: "1b4d99fa0c3195efe42ceb62670f2a25"
+          key: `${global.Ayanokoji.imgbbkey}`
         }
       });
       await api.sendMessage(nino.data.data.url, event.threadID, event.messageID);
