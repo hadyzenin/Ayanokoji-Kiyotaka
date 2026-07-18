@@ -2,7 +2,7 @@ module.exports = {
   hady: {
     nama: "setn",
     penulis: "Hady Zen",
-    kuldown: 8,
+    kuldown: 10,
     peran: 0,
     tutor: "<nama>"
   },
@@ -27,10 +27,10 @@ module.exports = {
 
     }
 
-    if (nama.length > 12) {
+    if (nama.length > 10) {
 
       return api.sendMessage(
-        "Nama kamu lebih dari 12 huruf.",
+        "Nama kamu lebih dari 10 huruf.",
         event.threadID,
         event.messageID
       );
