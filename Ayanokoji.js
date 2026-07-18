@@ -20,7 +20,7 @@
 const kiyopon = gradient("#ADD8E6", "#4682B4", "#00008B")(logo.ayanokoji);
 const tanggal = now.format('YYYY-MM-DD');
 const waktu = now.format('HH:mm:ss');
-global.Ayanokoji = { awalan: awalan, nama: nama, admin: admin, logo: logo, imgbbkey: imgbbkey,  maintain: maintain, waktu: waktu, tanggal: tanggal };
+global.Ayanokoji = { awalan: awalan, nama: nama, admin: admin, logo: logo, imgbbkey: imgbbkey, maintain: maintain, waktu: waktu, tanggal: tanggal };
 
 //DATA AYANOKOJI 
 let data = {};
@@ -143,42 +143,69 @@ if (body.toLowerCase().startsWith(nama)) {
  };
 if (!body.startsWith(awalan)) return console.log(logo.chat + `${event.senderID}: ${body}`);
    const cmd = body.slice(awalan.length).trim().split(/ +/g).shift().toLowerCase();
- async function hady_cmd(cmd, api, event) {
-    const pipi = body?.replace(`${awalan}${cmd}`, "")?.trim();
-    const args = pipi?.split(' ');
-	 try {
-    const skibidi = await new Promise((resolve, reject) => { api.getThreadInfo(event.threadID, (err, info) => { if (err) reject(err); else resolve(info); }); });
-    const fitri = skibidi.adminIDs.map(admin => admin.id);
-    const files = fs.readdirSync(path.join(__dirname, '/perintah'));
-       for (const file of files) {
-   if (file.endsWith('.js')) {
-    const anime = path.join(path.join(__dirname, '/perintah'), file);
-    const { hady, Ayanokoji } = require(anime);
-   if (hady && hady.nama === cmd && typeof Ayanokoji === 'function') {
-  console.log(logo.info + `Menjalankan perintah ${hady.nama}`);
-   if (kuldown(event.senderID, hady.nama, hady.kuldown) == 'hadi') {    
-if (hady.peran == 0 || !hady.peran) {
-    await Ayanokoji({ api, event, args, getStream, setUser, getData, fbid });
-    return;
+   
+//CMDS AYANOKOJI 
+  async function hady_cmd(cmd, api, event) {
+  const pipi = body?.replace(`${awalan}${cmd}`, "").trim();
+  const args = pipi?.split(" ");
+  const { saran } = require('./hady-zen/saran');
+
+  try {
+    const skibidi = await new Promise((resolve, reject) => {
+      api.getThreadInfo(event.threadID, (err, info) => err ? reject(err) : resolve(info));
+    });
+
+    const fitri = skibidi.adminIDs.map(v => v.id);
+    const files = fs.readdirSync(path.join(__dirname, "perintah"));
+    const listCmd = [];
+    let ditemukan = false;
+
+    for (const file of files) {
+      if (!file.endsWith(".js")) continue;
+
+      const { hady, Ayanokoji } = require(path.join(__dirname, "perintah", file));
+
+      if (hady?.nama) listCmd.push(hady.nama);
+      if (!hady || hady.nama !== cmd || typeof Ayanokoji !== "function") continue;
+
+      ditemukan = true;
+
+      console.log(logo.info + `Menjalankan perintah ${hady.nama}.`);
+
+      if (kuldown(event.senderID, hady.nama, hady.kuldown) !== "hadi") {
+        return api.sendMessage("Sabar dong :v", event.threadID, event.messageID);
+      }
+
+      if (!hady.peran || hady.peran == 0) {
+        return await Ayanokoji({ api, event, args, getStream, setUser, getData, fbid });
+      }
+
+      if (hady.peran == 2 && admin.includes(event.senderID)) {
+        return await Ayanokoji({ api, event, args, getStream, setUser, getData, fbid });
+      }
+
+      if (hady.peran == 1 && fitri.includes(event.senderID)) {
+        return await Ayanokoji({ api, event, args, getStream, setUser, getData, fbid });
+      }
+
+      return api.setMessageReaction("🚫", event.messageID);
+    }
+
+    if (!ditemukan) {
+  const mirip = saran(cmd, listCmd);
+  console.log(logo.info + `Tidak ada perintah ${cmd}.`);
+
+  return api.sendMessage(
+    mirip
+      ? `Mungkin maksud kamu ${awalan}${mirip}?`
+      : `Perintah '${cmd}' tidak ada, gunakan ${awalan}menu buat lihat daftar perintah.`,
+    event.threadID,
+    event.messageID
+  );
 }
-if ((hady.peran == 2 || hady.peran == 1) && admin.includes(event.senderID) || hady.peran == 0) {
-    await Ayanokoji({ api, event, args, getStream, setUser, getData, fbid });
-    return;
-} else if (hady.peran == 1 && fitri.join(', ').includes(event.senderID) || hady.peran == 0) {
-    await Ayanokoji({ api, event, args, getStream, setUser, getData, fbid });
-    return;
-} else { 
-    api.setMessageReaction("🚫", event.messageID);
-}
-  } else {
-   api.sendMessage("Sabar dong :v", event.threadID, event.messageID);
-   }
-  } 
- }
-}
- } catch (error) {
-   console.log(logo.error + 'Perintah error: ' + error.message);
- }
+  } catch (error) {
+    console.log(logo.error + "Perintah error: " + error.message);
+  }
 }
  hady_cmd(cmd, api, event);
  });
