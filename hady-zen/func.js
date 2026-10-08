@@ -7,22 +7,6 @@
  const cheerio = require('cheerio');
  const { aikey } = require('../kiyotaka');
 
-function clear() {
-    const assetsDir = path.join(__dirname, '..', 'assets');
-    fs.readdir(assetsDir, (err, files) => {
-        if (err) return;
-        files.forEach((file) => {
-            const filePath = path.join(assetsDir, file);
-            fs.stat(filePath, (err, stats) => {
-                if (err) return;
-                if (stats.isFile()) {
-                    fs.unlink(filePath, () => {});
-                }
-            });
-        });
-    });
-}
-
 async function getStream(hadi, isekai) {
     try {
   const kiyotaka = await axios.get(hadi, { responseType: 'arraybuffer' });
@@ -80,4 +64,4 @@ const res = await axios.post("https://api.groq.com/openai/v1/chat/completions", 
   return res.data.choices[0].message.content;
 };
 
-module.exports = { clear, getStream, fbid, DyAI };
+module.exports = { getStream, fbid, DyAI };
