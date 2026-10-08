@@ -2,7 +2,7 @@
 
 <h1 align="center">KIYOPON V1 </h1>
 
-> Chatbot for Facebook 💛🩵 <br>
+> Chatbot for Facebook ❤️💙 <br>
 
 ![hady](https://skillicons.dev/icons?i=html,css,js,nodejs,bash&theme=dark) 
 
