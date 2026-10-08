@@ -132,8 +132,7 @@ if (global.Ayanokoji.maintain === true && !admin.includes(event.senderID) || cha
 if (body.toLowerCase() == "prefix") return api.sendMessage(`Awalan ${nama} adalah: ${awalan}`, event.threadID, event.messageID);
 if (body.toLowerCase().startsWith(nama)) {
    const ijo = body.slice(5) || " hai";
-   const harmonie = "Prompt: Namamu adalah Kiyopon, respon kamu harus ramah, modern, gaul, suka becanda, dan singkat. User: " + ijo;  
-   DyAI(harmonie).then(jawaban => {
+   DyAI(ijo).then(jawaban => {
     return api.sendMessage(jawaban, event.threadID, event.messageID);
   }).catch(e => {
     console.log(e);
