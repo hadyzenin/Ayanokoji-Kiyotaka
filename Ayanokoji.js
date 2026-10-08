@@ -7,7 +7,7 @@
  const fs = require('fs');
  const path = require('path');
  const login = require('hadyzen-fca');
- const { clear, getStream, fbid, DyAI } = require('./hady-zen/func');
+ const { getStream, fbid, DyAI } = require('./hady-zen/func');
  const akun = fs.readFileSync('akun.txt', 'utf8');
  const { version } = require('./package');
  const gradient = require('gradient-string');
@@ -74,7 +74,6 @@ function simpan() {
 };
 
 //LOG AYANOKOJI 
-clear();
 console.log(kiyopon);
 console.log(logo.info + `Versi ${version}`);
 console.log(logo.info + `Awalan ${awalan}`);
