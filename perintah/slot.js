@@ -28,7 +28,7 @@ module.exports = {
       return api.sendMessage(`Yen tidak cukup! yen kamu ${userData.yen}`, event.threadID, event.messageID);
     }
 
-    const colors = ["❤️", "💛", "💚", "💙", "💜", "🧡"];
+    const colors = ["❤️", "💛", "💚", "💙", "💜"];
     let slot = [];
     const isJackpotRoll = Math.random() < 0.10;
 
