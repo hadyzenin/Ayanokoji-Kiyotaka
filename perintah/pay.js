@@ -11,7 +11,7 @@ module.exports = {
     const senderID = event.senderID;
 
     if (args.length < 2) {
-      return api.sendMessage("Format salah!\nContoh: pay <id> <jumlah>", event.threadID, event.messageID);
+      return api.sendMessage("Format salah! contoh: pay <id> <jumlah>", event.threadID, event.messageID);
     }
 
     const targetID = args[0];
@@ -37,7 +37,7 @@ module.exports = {
     setUser(targetID, 'yen', targetData.yen + duit);
 
     api.sendMessage(
-      `Berhasil transfer ${duit} yen ke ${targetID}`,
+      `Berhasil transfer ${duit} yen ke ${targetData.nama}`,
       event.threadID,
       event.messageID
     );
