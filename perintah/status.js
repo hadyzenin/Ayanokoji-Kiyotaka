@@ -14,210 +14,143 @@ function roundRect(ctx, x, y, w, h, r, color) {
 }
 function drawCover(ctx, img, x, y, w, h) {
   const scale = Math.max(w / img.width, h / img.height);
-
   const nw = img.width * scale;
   const nh = img.height * scale;
-
   const nx = x + (w - nw) / 2;
   const ny = y + (h - nh) / 2;
-
   ctx.drawImage(img, nx, ny, nw, nh);
 }
 function drawAvatar(ctx, img, x, y, size) {
   const scale = Math.max(size / img.width, size / img.height);
-
   const nw = img.width * scale;
   const nh = img.height * scale;
-
   const nx = x - (nw - size) / 2;
   const ny = y - (nh - size) / 2;
-
   ctx.save();
   ctx.beginPath();
   ctx.arc(x + size / 2, y + size / 2, size / 2, 0, Math.PI * 2);
   ctx.closePath();
   ctx.clip();
-
   ctx.drawImage(img, nx, ny, nw, nh);
-
   ctx.restore();
 }
+
 module.exports = {
   hady: {
     nama: "status",
     penulis: "Hady Zen",
-    kuldown: 24,
+    kuldown: 30,
     peran: 0,
-    tutor: ""
+    tutor: ".status"
   },
 
-  Ayanokoji: async function ({ api, event, getData, getStream }) {
-
-    const {
-      nama,
-      level,
-      exp,
-      yen,
-      chat,
-      pp,
-      bg,
-      title,
-      flag
-    } = getData(event.senderID);
-
+  Ayanokoji: async function ({ api, event, getData }) {
+    const { nama, level, exp, yen, chat, pp, bg, title, flag } = getData(event.senderID);
+    const warna = `${global.Ayanokoji.warna}`;
     const canvas = Canvas.createCanvas(900, 450);
     const ctx = canvas.getContext("2d");
 
-    const background = await Canvas.loadImage(
-  bg || "https://i.ibb.co/DHF0mdSb/hady.jpg"
-);
+    const background = await Canvas.loadImage(bg || "https://i.ibb.co/ccMWzGjT/background.jpg");
     drawCover(ctx, background, 0, 0, 900, 450);
-
-    ctx.fillStyle = "rgba(0,0,0,.45)";
+    ctx.fillStyle = "rgba(0,0,0,.5)";
     ctx.fillRect(0, 0, 900, 450);
 
-    roundRect(ctx, 25, 25, 850, 400, 22, "rgba(25,25,35,.65)");
-
-    ctx.strokeStyle = "rgba(255,255,255,.08)";
-    ctx.lineWidth = 2;
+    roundRect(ctx, 25, 25, 850, 400, 24, "rgba(18,18,28,.75)");
+    ctx.strokeStyle = "rgba(255,255,255,.07)";
+    ctx.lineWidth = 1.5;
     ctx.strokeRect(25, 25, 850, 400);
 
-    const avatar = await Canvas.loadImage(
-  pp || "https://i.ibb.co/n8qKSx0Z/hady.jpg"
-);
+    const avatar = await Canvas.loadImage(pp || "https://i.ibb.co/jZDZs118/hady.jpg");
+    const avatarSize = 160, avatarX = 45, avatarY = 55;
+    ctx.beginPath();
+    ctx.arc(avatarX + avatarSize / 2, avatarY + avatarSize / 2, avatarSize / 2 + 2, 0, Math.PI * 2);
+    ctx.fillStyle = warna;
+    ctx.fill();
+    drawAvatar(ctx, avatar, avatarX, avatarY, avatarSize);
 
-   const avatarSize = 160;
-const avatarX = 45;
-const avatarY = 58;
-     const border = 2;
-      
-ctx.beginPath();
-ctx.arc(
-  avatarX + avatarSize / 2,
-  avatarY + avatarSize / 2,
-  avatarSize / 2 + border,
-  0,
-  Math.PI * 2
-);
-ctx.fillStyle = "#7b61ff";
-ctx.fill();
+    const badgeW = 140, badgeH = 34, badgeX = avatarX + (avatarSize - badgeW) / 2, badgeY = avatarY + avatarSize + 14;
+    roundRect(ctx, badgeX, badgeY, badgeW, badgeH, 18, "rgba(123,97,255,.18)");
+    ctx.strokeStyle = warna;
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.roundRect(badgeX, badgeY, badgeW, badgeH, 18);
+    ctx.stroke();
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "bold 17px Sans";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText(title, badgeX + badgeW / 2, badgeY + badgeH / 2);
+    ctx.textAlign = "start";
+    ctx.textBaseline = "alphabetic";
 
-drawAvatar(ctx, avatar, avatarX, avatarY, avatarSize);
+    const infoX = 255;
+    const nameY = 145; 
 
-const badgeW = 140;
-const badgeH = 34;
-const badgeX = avatarX + (avatarSize - badgeW) / 2;
-const badgeY = avatarY + avatarSize + 16;
-      
-roundRect(
-  ctx,
-  badgeX,
-  badgeY,
-  badgeW,
-  badgeH,
-  18,
-  "rgba(255,255,255,.06)"
-);
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "bold 34px Sans";
+    ctx.fillText(nama, infoX, nameY);
 
-ctx.strokeStyle = "rgba(123,97,255,.8)";
-ctx.lineWidth = 2;
-ctx.strokeRect(badgeX, badgeY, badgeW, badgeH);
+    const barW = 570, barH = 18, barX = infoX, barY = 250;
+    const maxExp = 100;
+    const persen = Math.min(exp, maxExp) / maxExp;
 
-ctx.fillStyle = "#ffffff";
-ctx.font = "bold 17px Sans";
-ctx.textAlign = "center";
-ctx.textBaseline = "middle";
+    ctx.fillStyle = "#d6d6e5";
+    ctx.font = "700 19px Sans";
+    ctx.fillText(`Level ${level}`, barX + 2, barY - 10);
 
-ctx.fillText(
-  title,
-  badgeX + badgeW / 2,
-  badgeY + badgeH / 2
-);
+    roundRect(ctx, barX, barY, barW, barH, 9, "#2c2f3a");
+    const grad = ctx.createLinearGradient(barX, 0, barX + barW, 0);
+    grad.addColorStop(0, warna);
+    grad.addColorStop(1, "#4cc9f0");
+    roundRect(ctx, barX, barY, barW * persen, barH, 9, grad);
 
-ctx.textAlign = "start";
-ctx.textBaseline = "alphabetic";
-      
-    const infoX = 250; 
-const nameY = 160; 
-let fontSize = 26;
-      
-ctx.fillStyle = "#ffffff";
-ctx.font = `bold ${fontSize}px Sans`;
-ctx.fillText(nama, infoX, nameY);
+    const bendera = await Canvas.loadImage(`https://flagcdn.com/w80/${flag}.png`);
+    const flagW = 44, flagH = 30, flagX = canvas.width - flagW - 54, flagY = 54;
+    ctx.save();
+    ctx.beginPath();
+    ctx.roundRect(flagX, flagY, flagW, flagH, 7);
+    ctx.clip();
+    ctx.drawImage(bendera, flagX, flagY, flagW, flagH);
+    ctx.restore();
 
-      const bendera = await Canvas.loadImage(`https://flagcdn.com/w80/${flag}.png`);
+    const panelX = 25, panelW = 850, boxY = 305, boxH = 95, gap = 20;
+    const boxW = (panelW - gap * 3) / 2;
 
-const flagW = 44;
-const flagH = 30;
-const flagX = canvas.width - flagW - 54;
-const flagY = 54;
+    const box = (x, label, value, color) => {
+      ctx.save();
+      roundRect(ctx, x, boxY, boxW, boxH, 16, "rgba(255,255,255,.07)");
+      ctx.shadowColor = color;
+      ctx.shadowBlur = 14;
+      ctx.strokeStyle = color + "55";
+      ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      ctx.roundRect(x, boxY, boxW, boxH, 16);
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+      roundRect(ctx, x, boxY, boxW, 3, 3, color);
+      ctx.fillStyle = "rgba(255,255,255,.55)";
+      ctx.font = "600 13px Sans";
+      ctx.fillText(label.toUpperCase(), x + 20, boxY + 28);
+      ctx.fillStyle = color;
+      ctx.font = "bold 28px Sans";
+      ctx.fillText(value, x + 20, boxY + 64);
+      ctx.fillStyle = color + "22";
+      ctx.beginPath();
+      ctx.arc(x + boxW - 30, boxY + 32, 18, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = color;
+      ctx.font = "bold 12px Sans";
+      ctx.textAlign = "center";
+      ctx.fillText(label[0], x + boxW - 30, boxY + 36);
+      ctx.textAlign = "start";
+      ctx.restore();
+    };
 
-ctx.save();
-ctx.beginPath();
-ctx.roundRect(flagX, flagY, flagW, flagH, 7);
-ctx.clip();
-
-ctx.drawImage(bendera, flagX, flagY, flagW, flagH);
-
-ctx.restore();
-      
-const maxExp = 100;
-const persen = Math.min(exp, maxExp) / maxExp;
-
-const barW = 570;
-const barH = 18;
-const barX = infoX;
-const barY = 250;
-  
-roundRect(ctx,ctx.fillStyle = "#d6d6e5");
-ctx.font = "600 19px Sans";
-ctx.fillText(`Level ${level}`, barX + 4, barY - 6);
-roundRect(ctx, barX, barY, barW, barH, 9, "#2c2f3a");
-      
-const grad = ctx.createLinearGradient(barX, 0, barX + barW, 0);
-grad.addColorStop(0, "#7b61ff");
-grad.addColorStop(1, "#4cc9f0");
-
-roundRect(ctx, barX, barY, barW * persen, barH, 9, grad);
-    
-const panelX = 25;
-const panelW = 850;
-
-const boxY = 300; 
-const boxH = 95;
-const gap = 20;
-
-const boxW = (panelW - gap * 4) / 3;
-
-const box = (x, title, value, color) => {
-  roundRect(ctx, x, boxY, boxW, boxH, 16, "rgba(255,255,255,.06)");
-
-  ctx.strokeStyle = "rgba(255,255,255,.08)";
-  ctx.lineWidth = 2;
-  ctx.strokeRect(x, boxY, boxW, boxH);
-  
-  ctx.fillStyle = "#d0d0d0";
-ctx.font = "16px Sans";
-ctx.fillText(title, x + 20, boxY + 26);
-
-ctx.fillStyle = color;
-ctx.font = "bold 26px Sans";
-ctx.fillText(value, x + 20, boxY + 60);
-};
-
-const box1 = panelX + gap;
-const box2 = box1 + boxW + gap
-const box3 = box2 + boxW + gap;
-
-box(box1, "YEN", `${yen} ¥`, "#FFD54F");
-box(box2, "CHAT", `${chat}`, "#4CC9F0");
-box(box3, "NO", `100`, "#6DF27D");
+    box(panelX + gap, "yen", `${yen} ¥`, warna);
+    box(panelX + gap + boxW + gap, "chat", `${chat}`, warna);
 
     const file = "assets/status.png";
     fs.writeFileSync(file, canvas.toBuffer("image/png"));
-
-    return api.sendMessage({
-      attachment: fs.createReadStream(file)
-    }, event.threadID, event.messageID);
+    return api.sendMessage({ attachment: fs.createReadStream(file) }, event.threadID, event.messageID);
   }
 };
