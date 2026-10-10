@@ -11,7 +11,7 @@
  const akun = fs.readFileSync('akun.txt', 'utf8');
  const { version } = require('./package');
  const gradient = require('gradient-string');
- const { awalan, nama, admin, maintain, chatdm, imgbbkey, setting, zonawaktu } = require('./kiyotaka');
+ const { awalan, nama, admin, warna, maintain, chatdm, imgbbkey, setting, zonawaktu } = require('./kiyotaka');
  
  const { kuldown } = require('./hady-zen/kuldown');
  const moment = require('moment-timezone');
@@ -20,7 +20,7 @@
 const kiyopon = gradient("#ADD8E6", "#4682B4", "#00008B")(logo.ayanokoji);
 const tanggal = now.format('YYYY-MM-DD');
 const waktu = now.format('HH:mm:ss');
-global.Ayanokoji = { awalan: awalan, nama: nama, admin: admin, logo: logo, imgbbkey: imgbbkey, maintain: maintain, waktu: waktu, tanggal: tanggal };
+global.Ayanokoji = { awalan: awalan, nama: nama, warna: warna, admin: admin, logo: logo, imgbbkey: imgbbkey, maintain: maintain, waktu: waktu, tanggal: tanggal };
 
 //DATA AYANOKOJI 
 let data = {};
