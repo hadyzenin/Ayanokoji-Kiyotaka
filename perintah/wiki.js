@@ -26,7 +26,7 @@ module.exports = {
     try {
 
       const wikipedia = wiki.default({
-        apiUrl: `https://${global.Ayanokoji.bahasa}.wikipedia.org/w/api.php`
+        apiUrl: `https://id.wikipedia.org/w/api.php`
       });
 
       const page = await wikipedia.find(input);
